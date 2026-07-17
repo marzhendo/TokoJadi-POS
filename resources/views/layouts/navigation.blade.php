@@ -23,6 +23,19 @@
             </span>
         </a>
 
+        {{-- Kasir --}}
+        <a href="{{ route('transaksi.create') }}"
+           title="Kasir"
+           class="p-3 rounded-xl transition-colors duration-150
+                  {{ request()->routeIs('transaksi.create')
+                      ? 'bg-secondary-container text-on-secondary-container'
+                      : 'text-on-surface-variant hover:bg-surface-container-high' }}">
+            <span class="material-symbols-outlined"
+                  @if(request()->routeIs('transaksi.create')) style="font-variation-settings: 'FILL' 1;" @endif>
+                point_of_sale
+            </span>
+        </a>
+
         {{-- Master Produk --}}
         <a href="{{ route('produk.index') }}"
            title="Master Produk"
@@ -36,11 +49,17 @@
             </span>
         </a>
 
-        {{-- Riwayat Transaksi (route belum ada) --}}
-        <a href="#"
+        {{-- Riwayat Transaksi --}}
+        <a href="{{ route('transaksi.index') }}"
            title="Riwayat Transaksi"
-           class="p-3 rounded-xl transition-colors duration-150 text-on-surface-variant hover:bg-surface-container-high">
-            <span class="material-symbols-outlined">history</span>
+           class="p-3 rounded-xl transition-colors duration-150
+                  {{ request()->routeIs('transaksi.index')
+                      ? 'bg-secondary-container text-on-secondary-container'
+                      : 'text-on-surface-variant hover:bg-surface-container-high' }}">
+            <span class="material-symbols-outlined"
+                  @if(request()->routeIs('transaksi.index')) style="font-variation-settings: 'FILL' 1;" @endif>
+                history
+            </span>
         </a>
 
         {{-- Laporan (route belum ada) --}}

@@ -34,16 +34,16 @@ class ProdukSatuanJual extends Model
         return $this->belongsTo(Satuan::class);
     }
 
+    public function transaksiDetail()
+    {
+        return $this->hasMany(TransaksiDetail::class, 'satuan_jual_id');
+    }
+
     /**
-     * Cek apakah satuan jual ini sudah pernah dipakai di transaksi
+     * Mengecek apakah satuan jual ini pernah dipakai di transaksi
      */
     public function isUsedInTransaction(): bool
     {
-        // TODO: Nanti ketika tabel transaksi_detail sudah ada, cek keberadaannya.
-        // if (\Illuminate\Support\Facades\Schema::hasTable('transaksi_detail')) {
-        //     return \Illuminate\Support\Facades\DB::table('transaksi_detail')->where('produk_satuan_jual_id', $this->id)->exists();
-        // }
-        
-        return false;
+        return $this->transaksiDetail()->exists();
     }
 }

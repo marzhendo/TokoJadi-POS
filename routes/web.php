@@ -16,7 +16,10 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
-    Route::resource('produk', \App\Http\Controllers\ProdukController::class);
+    Route::resource('kategori', App\Http\Controllers\KategoriController::class);
+    Route::resource('satuan', App\Http\Controllers\SatuanController::class);
+    Route::resource('produk', App\Http\Controllers\ProdukController::class);
+    Route::resource('transaksi', App\Http\Controllers\TransaksiController::class);
 });
 
 require __DIR__.'/auth.php';
