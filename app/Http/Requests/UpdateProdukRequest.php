@@ -4,11 +4,11 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class StoreProdukRequest extends FormRequest
+class UpdateProdukRequest extends FormRequest
 {
     public function authorize(): bool
     {
-        return true; // v1: single owner, semua boleh
+        return true;
     }
 
     public function rules(): array
@@ -17,8 +17,6 @@ class StoreProdukRequest extends FormRequest
             'nama'                         => ['required', 'string', 'max:255'],
             'kategori_id'                  => ['required', 'exists:kategori,id'],
             'satuan_dasar_id'              => ['required', 'exists:satuan,id'],
-            // AGENTS.md: input angka di kasir/produk WAJIB divalidasi
-            'stok_saat_ini'                => ['required', 'numeric', 'min:0'],
             'stok_minimum'                 => ['required', 'numeric', 'min:0'],
             'harga_modal_per_satuan_dasar' => ['required', 'numeric', 'min:0'],
             // Minimal 1 satuan jual, tidak boleh duplikat satuan_id
@@ -35,8 +33,6 @@ class StoreProdukRequest extends FormRequest
             'nama.required'           => 'Nama produk wajib diisi.',
             'kategori_id.required'    => 'Pilih kategori produk.',
             'satuan_dasar_id.required' => 'Pilih satuan dasar.',
-            'stok_saat_ini.numeric'   => 'Stok harus berupa angka.',
-            'harga_modal_per_satuan_dasar.numeric' => 'Harga modal harus berupa angka.',
             'satuan_jual.required'    => 'Minimal satu satuan jual wajib ditambahkan.',
             'satuan_jual.min'         => 'Minimal satu satuan jual wajib ditambahkan.',
             'satuan_jual.*.satuan_id.distinct' => 'Terdapat satuan jual yang duplikat.',

@@ -49,17 +49,17 @@ class ProdukController extends Controller
     {
         $data = $request->validated();
 
-        $produk = Produk::create([
-            'nama'                        => $data['nama'],
-            'kategori_id'                 => $data['kategori_id'],
-            'satuan_dasar_id'             => $data['satuan_dasar_id'],
-            'stok_saat_ini'               => $data['stok_saat_ini'] ?? 0,
-            'stok_minimum'                => $data['stok_minimum'] ?? 0,
-            'harga_modal_per_satuan_dasar' => $data['harga_modal_per_satuan_dasar'] ?? 0,
-        ]);
+        \Illuminate\Support\Facades\DB::transaction(function () use ($data, &$produk) {
+            $produk = Produk::create([
+                'nama'                        => $data['nama'],
+                'kategori_id'                 => $data['kategori_id'],
+                'satuan_dasar_id'             => $data['satuan_dasar_id'],
+                'stok_saat_ini'               => $data['stok_saat_ini'] ?? 0,
+                'stok_minimum'                => $data['stok_minimum'] ?? 0,
+                'harga_modal_per_satuan_dasar' => $data['harga_modal_per_satuan_dasar'] ?? 0,
+            ]);
 
-        // Simpan satuan jual (minimal 1 — satuan dasar itu sendiri)
-        if (!empty($data['satuan_jual'])) {
+            // Simpan satuan jual (minimal 1 — divalidasi oleh Request)
             foreach ($data['satuan_jual'] as $sj) {
                 $produk->satuanJual()->create([
                     'satuan_id'                 => $sj['satuan_id'],
@@ -67,7 +67,7 @@ class ProdukController extends Controller
                     'harga_jual'                => $sj['harga_jual'],
                 ]);
             }
-        }
+        });
 
         return redirect()->route('produk.index')
             ->with('success', "Produk \"{$produk->nama}\" berhasil ditambahkan.");
@@ -88,10 +88,35 @@ class ProdukController extends Controller
         return view('produk.edit', compact('produk', 'kategoriList', 'satuanList'));
     }
 
-    public function update(StoreProdukRequest $request, Produk $produk): RedirectResponse
+    public function update(\App\Http\Requests\UpdateProdukRequest $request, Produk $produk): RedirectResponse
     {
-        // ponytail: update di-defer ke modul edit — belum ada view-nya
-        return redirect()->route('produk.index');
+        $data = $request->validated();
+        
+        // Strip out stok_saat_ini jika ada, karena form edit tidak mengirimkan stok, dan stok tidak boleh berubah di sini.
+        unset($data['stok_saat_ini']);
+
+        \Illuminate\Support\Facades\DB::transaction(function () use ($data, $produk) {
+            $produk->update([
+                'nama'                        => $data['nama'],
+                'kategori_id'                 => $data['kategori_id'],
+                'satuan_dasar_id'             => $data['satuan_dasar_id'],
+                'stok_minimum'                => $data['stok_minimum'] ?? 0,
+                'harga_modal_per_satuan_dasar' => $data['harga_modal_per_satuan_dasar'] ?? 0,
+            ]);
+
+            // Sync satuan jual (hapus lama, buat baru) untuk menjaga konsistensi
+            $produk->satuanJual()->delete();
+            foreach ($data['satuan_jual'] as $sj) {
+                $produk->satuanJual()->create([
+                    'satuan_id'                 => $sj['satuan_id'],
+                    'jumlah_dalam_satuan_dasar' => $sj['jumlah_dalam_satuan_dasar'],
+                    'harga_jual'                => $sj['harga_jual'],
+                ]);
+            }
+        });
+
+        return redirect()->route('produk.index')
+            ->with('success', "Produk \"{$produk->nama}\" berhasil diubah.");
     }
 
     public function destroy(Produk $produk): RedirectResponse
