@@ -1,6 +1,6 @@
-@extends('layouts.app')
+<x-app-layout>
+    <x-slot name="pageTitle">Kasir</x-slot>
 
-@section('content')
 <div class="max-w-4xl mx-auto pb-24 md:pb-12">
     <!-- Header -->
     <div class="mb-6">
@@ -216,7 +216,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 const opt = document.createElement('option');
                 opt.value = sj.id;
                 // Since we don't have the satuan name eagerly loaded, we will just show harga and konversi
-                opt.text = \`Rp \${parseFloat(sj.harga_jual).toLocaleString('id-ID')} (Isi \${parseFloat(sj.jumlah_dalam_satuan_dasar)} \${selectedProduk.satuan_dasar.nama})\`;
+                opt.text = `Rp ${parseFloat(sj.harga_jual).toLocaleString('id-ID')} (Isi ${parseFloat(sj.jumlah_dalam_satuan_dasar)} ${selectedProduk.satuan_dasar?.nama || 'Unit'})`;
                 selectSatuanJual.appendChild(opt);
             });
         } else {
@@ -294,4 +294,4 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 });
 </script>
-@endsection
+</x-app-layout>

@@ -1,6 +1,6 @@
-@extends('layouts.app')
+<x-app-layout>
+    <x-slot name="pageTitle">Riwayat Transaksi</x-slot>
 
-@section('content')
 <div class="mb-6 flex justify-between items-end">
     <div>
         <h1 class="font-headline-lg text-headline-lg text-text-primary font-bold">Riwayat Transaksi</h1>
@@ -82,4 +82,4 @@
         {{ $transaksi->withQueryString()->links() }}
     </div>
 </div>
-@endsection
+</x-app-layout>
