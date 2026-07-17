@@ -18,16 +18,22 @@
                       ? 'bg-secondary-container text-on-secondary-container'
                       : 'text-on-surface-variant hover:bg-surface-container-high' }}">
             <span class="material-symbols-outlined"
-                  style="{{ request()->routeIs('dashboard') ? \"font-variation-settings: 'FILL' 1;\" : '' }}">
+                  @if(request()->routeIs('dashboard')) style="font-variation-settings: 'FILL' 1;" @endif>
                 home
             </span>
         </a>
 
-        {{-- Master Produk (route belum ada, disiapkan) --}}
-        <a href="#"
+        {{-- Master Produk --}}
+        <a href="{{ route('produk.index') }}"
            title="Master Produk"
-           class="p-3 rounded-xl transition-colors duration-150 text-on-surface-variant hover:bg-surface-container-high">
-            <span class="material-symbols-outlined">inventory_2</span>
+           class="p-3 rounded-xl transition-colors duration-150
+                  {{ request()->routeIs('produk.*')
+                      ? 'bg-secondary-container text-on-secondary-container'
+                      : 'text-on-surface-variant hover:bg-surface-container-high' }}">
+            <span class="material-symbols-outlined"
+                  @if(request()->routeIs('produk.*')) style="font-variation-settings: 'FILL' 1;" @endif>
+                inventory_2
+            </span>
         </a>
 
         {{-- Riwayat Transaksi (route belum ada) --}}
