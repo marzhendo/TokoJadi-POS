@@ -84,7 +84,7 @@ class ProdukController extends Controller
     {
         $kategoriList = Kategori::orderBy('nama')->get();
         $satuanList   = Satuan::orderBy('nama')->get();
-        $produk->load('satuanJual');
+        $produk->load(['satuanJual' => fn($q) => $q->where('aktif', true)]);
         return view('produk.edit', compact('produk', 'kategoriList', 'satuanList'));
     }
 
@@ -104,14 +104,42 @@ class ProdukController extends Controller
                 'harga_modal_per_satuan_dasar' => $data['harga_modal_per_satuan_dasar'] ?? 0,
             ]);
 
-            // Sync satuan jual (hapus lama, buat baru) untuk menjaga konsistensi
-            $produk->satuanJual()->delete();
+            // Identifikasi id satuan_jual yang dikirim dari form
+            $incomingIds = collect($data['satuan_jual'])->pluck('id')->filter()->toArray();
+
+            // Tangani penghapusan (hard delete atau nonaktifkan)
+            $existingSatuanJual = $produk->satuanJual;
+            foreach ($existingSatuanJual as $esj) {
+                if (!in_array($esj->id, $incomingIds)) {
+                    if ($esj->isUsedInTransaction()) {
+                        // Jika sudah pernah ada transaksi, jangan dihapus tapi dinonaktifkan
+                        $esj->update(['aktif' => false]);
+                    } else {
+                        // Jika belum ada transaksi, aman untuk di hard delete
+                        $esj->delete();
+                    }
+                }
+            }
+
+            // Tambah baru atau perbarui yang sudah ada
             foreach ($data['satuan_jual'] as $sj) {
-                $produk->satuanJual()->create([
-                    'satuan_id'                 => $sj['satuan_id'],
-                    'jumlah_dalam_satuan_dasar' => $sj['jumlah_dalam_satuan_dasar'],
-                    'harga_jual'                => $sj['harga_jual'],
-                ]);
+                if (!empty($sj['id'])) {
+                    // Update yang sudah ada
+                    $produk->satuanJual()->where('id', $sj['id'])->update([
+                        'satuan_id'                 => $sj['satuan_id'],
+                        'jumlah_dalam_satuan_dasar' => $sj['jumlah_dalam_satuan_dasar'],
+                        'harga_jual'                => $sj['harga_jual'],
+                        'aktif'                     => true, // Pastikan aktif
+                    ]);
+                } else {
+                    // Buat baru
+                    $produk->satuanJual()->create([
+                        'satuan_id'                 => $sj['satuan_id'],
+                        'jumlah_dalam_satuan_dasar' => $sj['jumlah_dalam_satuan_dasar'],
+                        'harga_jual'                => $sj['harga_jual'],
+                        'aktif'                     => true,
+                    ]);
+                }
             }
         });
 

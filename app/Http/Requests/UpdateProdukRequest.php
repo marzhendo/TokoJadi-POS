@@ -21,6 +21,7 @@ class UpdateProdukRequest extends FormRequest
             'harga_modal_per_satuan_dasar' => ['required', 'numeric', 'min:0'],
             // Minimal 1 satuan jual, tidak boleh duplikat satuan_id
             'satuan_jual'                  => ['required', 'array', 'min:1'],
+            'satuan_jual.*.id'             => ['nullable', 'integer', 'exists:produk_satuan_jual,id'],
             'satuan_jual.*.satuan_id'      => ['required', 'exists:satuan,id', 'distinct'],
             'satuan_jual.*.jumlah_dalam_satuan_dasar' => ['required', 'numeric', 'min:0.001'],
             'satuan_jual.*.harga_jual'     => ['required', 'numeric', 'min:0'],

@@ -130,7 +130,7 @@
             function createRow(data = null) {
                 const index = rowCount++;
                 const row = document.createElement('div');
-                row.className = 'grid grid-cols-12 gap-3 items-end bg-surface-white p-3 rounded-xl border border-table-border';
+                row.className = 'grid grid-cols-12 gap-3 items-end bg-surface-white p-3 rounded-xl border border-table-border relative';
                 
                 let optionsHtml = '<option value="">Pilih</option>';
                 satuanList.forEach(s => {
@@ -138,7 +138,14 @@
                     optionsHtml += `<option value="${s.id}" ${selected}>${s.nama}</option>`;
                 });
 
+                // Jika punya id (data lama), sertakan hidden input
+                let idInput = '';
+                if (data && data.id) {
+                    idInput = `<input type="hidden" name="satuan_jual[${index}][id]" value="${data.id}" />`;
+                }
+
                 row.innerHTML = `
+                    ${idInput}
                     <div class="col-span-3">
                         <p class="text-[10px] font-bold text-text-secondary mb-1">SATUAN JUAL</p>
                         <select name="satuan_jual[${index}][satuan_id]" required class="w-full px-3 py-2 bg-surface-container-low border border-outline-variant rounded-lg text-xs font-medium focus:ring-1 focus:ring-primary focus:border-primary">
