@@ -162,7 +162,7 @@
 
     {{-- FAB: Update Harga Cepat — sesuai SKILL: laravel-design-tokens --}}
     {{-- ponytail: lingkaran hijau bg-primary, icon putih, kanan bawah, hanya halaman kasir/dashboard --}}
-    <a href="#"
+    <a href="{{ route('produk.index', ['status' => 'menipis']) }}"
        id="fab-update-harga"
        class="fixed bottom-lg right-lg bg-primary hover:bg-primary-container text-on-primary rounded-full px-lg py-4 flex items-center gap-md shadow-lg transition-all duration-150 active:scale-95 z-50 group">
         <span class="material-symbols-outlined" style="font-size: 20px;">bolt</span>
