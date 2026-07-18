@@ -52,7 +52,7 @@ graph TD
     
     %% Relasi Aksi User
     User -->|Melakukan Penjualan| Kasir
-    User -->|Mengelola| Master Data
+    User -->|Mengelola| M_Prod
     User -->|Mencatat Barang| Titipan
     
     %% Alur Transaksi
