@@ -49,9 +49,14 @@ class Produk extends Model
         if ($this->stok_saat_ini <= 0) {
             return 'habis';
         }
-        if ($this->stok_saat_ini <= $this->stok_minimum) {
+        if ($this->isStokMenipis()) {
             return 'menipis';
         }
         return 'tersedia';
+    }
+
+    public function isStokMenipis(): bool
+    {
+        return $this->stok_saat_ini <= $this->stok_minimum;
     }
 }
