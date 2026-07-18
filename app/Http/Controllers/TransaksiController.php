@@ -30,7 +30,9 @@ class TransaksiController extends Controller
     public function create(): View
     {
         // Load all active products with their active satuan_jual to populate JS cart
-        $produkList = Produk::with(['satuanDasar', 'satuanJual' => fn($q) => $q->where('aktif', true)])->get();
+        $produkList = Produk::with(['satuanDasar', 'satuanJual' => fn($q) => $q->where('aktif', true)])
+            ->where('aktif', true)
+            ->get();
         // Load all pelanggan to populate dropdown
         $pelangganList = \App\Models\Pelanggan::orderBy('nama')->get();
         return view('transaksi.create', compact('produkList', 'pelangganList'));

@@ -39,6 +39,7 @@ class LaporanController extends Controller
     public function stokMenipis(): View
     {
         $produk = \App\Models\Produk::with('satuanDasar')
+            ->where('aktif', true)
             ->whereColumn('stok_saat_ini', '<=', 'stok_minimum')
             // Urutkan berdasarkan selisih terkecil antara stok_saat_ini dan stok_minimum
             ->orderByRaw('(stok_saat_ini - stok_minimum) ASC')

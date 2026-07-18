@@ -150,8 +150,25 @@ class ProdukController extends Controller
     public function destroy(Produk $produk): RedirectResponse
     {
         $nama = $produk->nama;
+
+        if ($produk->isUsedInTransaction()) {
+            $produk->update(['aktif' => false]);
+            return redirect()->route('produk.index')
+                ->with('success', "Produk \"{$nama}\" pernah terjual, dinonaktifkan agar riwayat transaksi tetap valid.");
+        }
+
+        // Hard delete
+        $produk->satuanJual()->delete();
         $produk->delete();
+        
         return redirect()->route('produk.index')
-            ->with('success', "Produk \"{$nama}\" dihapus.");
+            ->with('success', "Produk \"{$nama}\" dihapus permanen.");
+    }
+
+    public function toggleAktif(Produk $produk): RedirectResponse
+    {
+        $produk->update(['aktif' => true]);
+        return redirect()->route('produk.index')
+            ->with('success', "Produk \"{$produk->nama}\" diaktifkan kembali.");
     }
 }

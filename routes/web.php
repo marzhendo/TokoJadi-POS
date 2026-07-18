@@ -19,6 +19,7 @@ Route::middleware('auth')->group(function () {
     Route::resource('kategori', App\Http\Controllers\KategoriController::class);
     Route::resource('satuan', App\Http\Controllers\SatuanController::class);
     Route::resource('produk', App\Http\Controllers\ProdukController::class);
+    Route::patch('produk/{produk}/toggle-aktif', [App\Http\Controllers\ProdukController::class, 'toggleAktif'])->name('produk.toggle-aktif');
     Route::resource('transaksi', App\Http\Controllers\TransaksiController::class);
     
     // Laporan

@@ -17,6 +17,7 @@ class Produk extends Model
         'stok_saat_ini',
         'stok_minimum',
         'harga_modal_per_satuan_dasar',
+        'aktif',
     ];
 
     // SKILL: laravel-model — cast kolom uang/stok
@@ -24,6 +25,7 @@ class Produk extends Model
         'stok_saat_ini'               => 'decimal:3',
         'stok_minimum'                => 'decimal:3',
         'harga_modal_per_satuan_dasar' => 'decimal:2',
+        'aktif'                       => 'boolean',
     ];
 
     public function kategori(): BelongsTo
@@ -58,5 +60,10 @@ class Produk extends Model
     public function isStokMenipis(): bool
     {
         return $this->stok_saat_ini <= $this->stok_minimum;
+    }
+
+    public function isUsedInTransaction(): bool
+    {
+        return $this->satuanJual()->whereHas('transaksiDetail')->exists();
     }
 }
