@@ -15,6 +15,7 @@ class Transaksi extends Model
         'tanggal',
         'metode_bayar',
         'pelanggan_id',
+        'status_kasbon',
         'total_belanja',
     ];
 
@@ -30,6 +31,26 @@ class Transaksi extends Model
 
     public function pelanggan(): BelongsTo
     {
-        return $this->belongsTo(Pelanggan::class); // model Pelanggan doesn't exist yet but relation is ready for v2
+        return $this->belongsTo(Pelanggan::class, 'pelanggan_id');
+    }
+
+    public function pembayaranKasbon(): HasMany
+    {
+        return $this->hasMany(PembayaranKasbon::class);
+    }
+
+    public function sisaKasbon(): float
+    {
+        // Calculate remaining debt based on loaded relation if possible, or query otherwise
+        $terbayar = $this->relationLoaded('pembayaranKasbon') 
+            ? $this->pembayaranKasbon->sum('jumlah_bayar')
+            : $this->pembayaranKasbon()->sum('jumlah_bayar');
+            
+        return max(0, $this->total_belanja - $terbayar);
+    }
+
+    public function isLunas(): bool
+    {
+        return $this->sisaKasbon() <= 0;
     }
 }

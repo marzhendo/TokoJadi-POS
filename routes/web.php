@@ -31,6 +31,11 @@ Route::middleware('auth')->group(function () {
     Route::get('/titipan/riwayat', [App\Http\Controllers\TitipanController::class, 'riwayat'])->name('titipan.riwayat');
     Route::resource('titipan', App\Http\Controllers\TitipanController::class)->only(['index', 'create', 'store']);
     Route::post('/titipan/{titipan}/jual', [App\Http\Controllers\TitipanController::class, 'catatPenjualan'])->name('titipan.jual');
+    
+    // Pelanggan & Kasbon
+    Route::resource('pelanggan', App\Http\Controllers\PelangganController::class)->only(['index', 'create', 'store', 'show']);
+    Route::get('/kasbon', [App\Http\Controllers\KasbonController::class, 'index'])->name('kasbon.index');
+    Route::post('/kasbon/{transaksi}/bayar', [App\Http\Controllers\KasbonController::class, 'bayar'])->name('kasbon.bayar');
 });
 
 require __DIR__.'/auth.php';
