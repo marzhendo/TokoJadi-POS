@@ -62,11 +62,71 @@
             </span>
         </a>
 
-        {{-- Laporan (route belum ada) --}}
-        <a href="#"
-           title="Laporan"
-           class="p-3 rounded-xl transition-colors duration-150 text-on-surface-variant hover:bg-surface-container-high">
-            <span class="material-symbols-outlined">analytics</span>
+        {{-- Laporan Penjualan --}}
+        <a href="{{ route('laporan.penjualan') }}"
+           title="Laporan Penjualan"
+           class="p-3 rounded-xl transition-colors duration-150
+                  {{ request()->routeIs('laporan.penjualan')
+                      ? 'bg-secondary-container text-on-secondary-container'
+                      : 'text-on-surface-variant hover:bg-surface-container-high' }}">
+            <span class="material-symbols-outlined"
+                  @if(request()->routeIs('laporan.penjualan')) style="font-variation-settings: 'FILL' 1;" @endif>
+                analytics
+            </span>
+        </a>
+
+        {{-- Laporan Stok Menipis --}}
+        <a href="{{ route('laporan.stok-menipis') }}"
+           title="Stok Menipis"
+           class="p-3 rounded-xl transition-colors duration-150 relative
+                  {{ request()->routeIs('laporan.stok-menipis')
+                      ? 'bg-secondary-container text-on-secondary-container'
+                      : 'text-on-surface-variant hover:bg-surface-container-high' }}">
+            <span class="material-symbols-outlined"
+                  @if(request()->routeIs('laporan.stok-menipis')) style="font-variation-settings: 'FILL' 1;" @endif>
+                warning
+            </span>
+        </a>
+
+        {{-- Laporan Produk Terlaris --}}
+        <a href="{{ route('laporan.produk-terlaris') }}"
+           title="Produk Terlaris"
+           class="p-3 rounded-xl transition-colors duration-150
+                  {{ request()->routeIs('laporan.produk-terlaris')
+                      ? 'bg-secondary-container text-on-secondary-container'
+                      : 'text-on-surface-variant hover:bg-surface-container-high' }}">
+            <span class="material-symbols-outlined"
+                  @if(request()->routeIs('laporan.produk-terlaris')) style="font-variation-settings: 'FILL' 1;" @endif>
+                star
+            </span>
+        </a>
+
+        {{-- Laporan Untung Rugi --}}
+        <a href="{{ route('laporan.untung-rugi') }}"
+           title="Untung Rugi"
+           class="p-3 rounded-xl transition-colors duration-150
+                  {{ request()->routeIs('laporan.untung-rugi')
+                      ? 'bg-secondary-container text-on-secondary-container'
+                      : 'text-on-surface-variant hover:bg-surface-container-high' }}">
+            <span class="material-symbols-outlined"
+                  @if(request()->routeIs('laporan.untung-rugi')) style="font-variation-settings: 'FILL' 1;" @endif>
+                monitoring
+            </span>
+        </a>
+
+        <div class="h-px bg-outline-variant/30 my-2 mx-2"></div>
+
+        {{-- Titipan Barang (Konsinyasi) --}}
+        <a href="{{ route('titipan.index') }}"
+           title="Titipan Barang (Konsinyasi)"
+           class="p-3 rounded-xl transition-colors duration-150
+                  {{ request()->routeIs('titipan.*')
+                      ? 'bg-secondary-container text-on-secondary-container'
+                      : 'text-on-surface-variant hover:bg-surface-container-high' }}">
+            <span class="material-symbols-outlined"
+                  @if(request()->routeIs('titipan.*')) style="font-variation-settings: 'FILL' 1;" @endif>
+                storefront
+            </span>
         </a>
     </div>
 
