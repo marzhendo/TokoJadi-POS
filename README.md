@@ -1,58 +1,94 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# TokoJadi POS (Point of Sales)
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+TokoJadi POS adalah sistem Point of Sales (Kasir) modern berbasis web yang dirancang secara khusus untuk memenuhi kompleksitas operasional toko ritel/kelontong menengah ke bawah. Sistem ini tidak hanya menangani penjualan standar, melainkan didesain sedemikian rupa untuk menyelesaikan kendala nyata di lapangan seperti konversi multi-satuan (misal: Dus ke Renceng ke Pcs), pencatatan barang titipan (konsinyasi), serta manajemen piutang/kasbon pelanggan yang terintegrasi secara mulus.
 
-## About Laravel
+---
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+## Mengapa Proyek Ini Dibuat?
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+Sistem kasir pada umumnya (di pasaran) terlalu kaku atau terlalu mahal untuk operasional toko kelontong harian yang memiliki alur bisnis unik. TokoJadi POS dibuat secara spesifik dengan alasan berikut:
+1. **Masalah Multi-Satuan:** Toko sering kulakan dalam bentuk Dus, tapi menjualnya dalam bentuk Pcs atau Pack. Sistem ini secara otomatis memecah dan mengkalkulasi harga modal hingga satuan terkecil agar margin keuntungan akurat 100%.
+2. **Barang Konsinyasi (Titipan):** Sulit membedakan uang hasil penjualan barang milik sendiri dengan barang titipan *supplier*. Sistem memisahkan secara jelas mana omzet toko dan mana utang konsinyasi.
+3. **Manajemen Kasbon:** Realitas di lapangan, banyak pelanggan sekitar yang berhutang (kasbon). Pencatatan di buku tulis sangat rentan hilang dan sulit direkap. Sistem ini mendigitalisasi buku kasbon lengkap dengan riwayat pelunasan sebagian/penuh.
+4. **Analisis Margin Cerdas:** Memberikan peringatan (*warning*) apabila margin suatu barang terlalu tipis (di bawah standar persentase yang aman), sehingga mencegah kebocoran profit secara tersembunyi.
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+---
 
-## Learning Laravel
+## Arsitektur Sistem & Modul
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+Sistem ini dibangun dengan pendekatan _Monolithic Architecture_ berbasis arsitektur MVC (Model-View-Controller) bawaan framework untuk memastikan kecepatan *deployment* dan kemudahan *maintenance*.
 
-In addition, [Laracasts](https://laracasts.com) contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+Berikut adalah visualisasi bagaimana setiap modul saling berinteraksi secara harmonis di balik layar:
 
-You can also watch bite-sized lessons with real-world projects on [Laravel Learn](https://laravel.com/learn), where you will be guided through building a Laravel application from scratch while learning PHP fundamentals.
+```mermaid
+graph TD
+    %% Definisi Aktor
+    User([Kasir / Admin])
+    
+    %% Kumpulan Modul Master
+    subgraph Master Data
+        M_Prod[Master Produk]
+        M_Ktg[Kategori]
+        M_Sat[Satuan & Multi-Harga]
+        M_Plg[Pelanggan]
+    end
 
-## Agentic Development
-
-Laravel's predictable structure and conventions make it ideal for AI coding agents like Claude Code, Cursor, and GitHub Copilot. Install [Laravel Boost](https://laravel.com/docs/ai) to supercharge your AI workflow:
-
-```bash
-composer require laravel/boost --dev
-
-php artisan boost:install
+    %% Kumpulan Modul Inti Operasional
+    subgraph Core Operations
+        Kasir[Modul Kasir / Transaksi]
+        Kasbon[Manajemen Kasbon]
+        Titipan[Konsinyasi / Titipan]
+    end
+    
+    %% Kumpulan Analitik
+    subgraph Reporting & Analytics
+        Dashboard[Dasbor Utama]
+        Lap[Laporan Keuangan & Stok]
+    end
+    
+    %% Relasi Master Data
+    M_Prod -->|Dikelompokkan oleh| M_Ktg
+    M_Prod -->|Dipecah menjadi| M_Sat
+    
+    %% Relasi Aksi User
+    User -->|Melakukan Penjualan| Kasir
+    User -->|Mengelola| Master Data
+    User -->|Mencatat Barang| Titipan
+    
+    %% Alur Transaksi
+    M_Prod -.->|Diakses oleh| Kasir
+    M_Sat -.->|Harga & Stok| Kasir
+    
+    %% Kasbon Flow
+    Kasir -->|Jika Metode = Kasbon| Kasbon
+    M_Plg -.->|Menunggak di| Kasbon
+    
+    %% Titipan Flow
+    Titipan -->|Integrasi Penjualan| Kasir
+    
+    %% Alur Laporan
+    Kasir ===>|Menghasilkan Data| Lap
+    Kasbon ===>|Menghasilkan Data| Lap
+    Titipan ===>|Menghasilkan Data| Lap
+    
+    %% Dashboard Aggregation
+    Lap -.->|Ringkasan KPI| Dashboard
+    M_Prod -.->|Peringatan Margin| Dashboard
 ```
 
-Boost provides your agent 15+ tools and skills that help agents build Laravel applications while following best practices.
+---
 
-## Contributing
+## Tech Stack (Tumpukan Teknologi)
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+Proyek ini ditenagai oleh perpaduan teknologi modern dan tangguh:
 
-## Code of Conduct
+*   **Backend:** [Laravel 11](https://laravel.com/) (PHP) – *Framework MVC yang andal dan aman.*
+*   **Frontend:** [Blade Templates](https://laravel.com/docs/blade) dipadukan dengan [Tailwind CSS](https://tailwindcss.com/) untuk antarmuka yang sangat responsif, cantik, dan konsisten (menggunakan desain sistem token).
+*   **Interaktivitas UI:** [Alpine.js](https://alpinejs.dev/) – *Untuk menangani modal, notifikasi, dan interaksi form dinamis tanpa memberatkan DOM.*
+*   **Database:** Relational Database (MySQL / SQLite) yang dirancang kuat menjaga integritas transaksi dengan perlindungan *Foreign Key*.
+*   **Iconography:** Google Material Symbols.
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+---
+<br>
 
-## Security Vulnerabilities
-
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
-
-## License
-
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+&copy; copyright marzhendo
