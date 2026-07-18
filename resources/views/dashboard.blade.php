@@ -21,7 +21,7 @@
             <div>
                 <p class="font-mono text-label-caps text-text-secondary mb-1 uppercase tracking-widest">Produk Aktif</p>
                 <p class="font-headline text-display-price text-primary">
-                    124 <span class="text-body-md font-normal text-text-secondary">Item</span>
+                    {{ number_format($totalProdukAktif, 0, ',', '.') }} <span class="text-body-md font-normal text-text-secondary">Item</span>
                 </p>
             </div>
             <div class="w-12 h-12 rounded-full bg-primary-container/10 flex items-center justify-center text-primary">
@@ -34,7 +34,7 @@
             <div>
                 <p class="font-mono text-label-caps text-text-secondary mb-1 uppercase tracking-widest">Margin Tipis/Rugi</p>
                 <p class="font-headline text-display-price text-margin-warning">
-                    12 <span class="text-body-md font-normal text-text-secondary">Item</span>
+                    {{ number_format($countMarginTipis, 0, ',', '.') }} <span class="text-body-md font-normal text-text-secondary">Item</span>
                 </p>
             </div>
             <div class="w-12 h-12 rounded-full bg-margin-warning/10 flex items-center justify-center text-margin-warning">
@@ -47,7 +47,7 @@
             <div>
                 <p class="font-mono text-label-caps text-text-secondary mb-1 uppercase tracking-widest">Belum Update (&gt;3 hari)</p>
                 <p class="font-headline text-display-price text-margin-danger">
-                    08 <span class="text-body-md font-normal text-text-secondary">Item</span>
+                    {{ number_format($countBelumUpdate, 0, ',', '.') }} <span class="text-body-md font-normal text-text-secondary">Item</span>
                 </p>
             </div>
             <div class="w-12 h-12 rounded-full bg-margin-danger/10 flex items-center justify-center text-margin-danger">
@@ -80,159 +80,79 @@
                     </thead>
                     <tbody class="divide-y divide-table-border">
 
-                        {{-- Row: Beras Cianjur (margin aman) --}}
-                        <tr class="hover:bg-primary/5 transition-colors">
-                            <td class="px-lg py-md">
-                                <div class="flex items-center gap-md">
-                                    <div class="w-8 h-8 rounded bg-surface-container flex items-center justify-center text-text-secondary shrink-0">
-                                        <span class="material-symbols-outlined" style="font-size: 16px;">potted_plant</span>
+                        @forelse($perluPerhatian as $p)
+                            <tr class="hover:bg-primary/5 transition-colors">
+                                <td class="px-lg py-md">
+                                    <div class="flex items-center gap-md">
+                                        <div class="w-8 h-8 rounded bg-surface-container flex items-center justify-center text-text-secondary shrink-0">
+                                            <span class="material-symbols-outlined" style="font-size: 16px;">warning</span>
+                                        </div>
+                                        <span class="font-body text-table-data font-semibold text-text-primary">{{ $p->nama }}</span>
                                     </div>
-                                    <span class="font-body text-table-data font-semibold text-text-primary">Beras Cianjur</span>
-                                </div>
-                            </td>
-                            <td class="px-lg py-md text-right font-mono text-numeric-mono text-text-secondary">Rp 12.500</td>
-                            <td class="px-lg py-md text-right font-mono text-numeric-mono font-bold text-text-primary">Rp 14.000</td>
-                            <td class="px-lg py-md text-center">
-                                <span class="px-3 py-1 rounded-lg bg-margin-success/15 text-margin-success font-bold text-label-caps">12%</span>
-                            </td>
-                            <td class="px-lg py-md text-center">
-                                <a href="#" class="material-symbols-outlined text-text-secondary hover:text-primary transition-colors">edit_square</a>
-                            </td>
-                        </tr>
-
-                        {{-- Row: Cabai Rawit (margin tipis/rugi) --}}
-                        <tr class="hover:bg-primary/5 transition-colors">
-                            <td class="px-lg py-md">
-                                <div class="flex items-center gap-md">
-                                    <div class="w-8 h-8 rounded bg-surface-container flex items-center justify-center text-text-secondary shrink-0">
-                                        <span class="material-symbols-outlined" style="font-size: 16px;">nutrition</span>
-                                    </div>
-                                    <span class="font-body text-table-data font-semibold text-text-primary">Cabai Rawit</span>
-                                </div>
-                            </td>
-                            <td class="px-lg py-md text-right font-mono text-numeric-mono text-text-secondary">Rp 45.000</td>
-                            <td class="px-lg py-md text-right font-mono text-numeric-mono font-bold text-text-primary">Rp 46.500</td>
-                            <td class="px-lg py-md text-center">
-                                <span class="px-3 py-1 rounded-lg bg-margin-danger/15 text-margin-danger font-bold text-label-caps">3.2%</span>
-                            </td>
-                            <td class="px-lg py-md text-center">
-                                <a href="#" class="material-symbols-outlined text-text-secondary hover:text-primary transition-colors">edit_square</a>
-                            </td>
-                        </tr>
-
-                        {{-- Row: Bawang Merah (margin warning) --}}
-                        <tr class="hover:bg-primary/5 transition-colors">
-                            <td class="px-lg py-md">
-                                <div class="flex items-center gap-md">
-                                    <div class="w-8 h-8 rounded bg-surface-container flex items-center justify-center text-text-secondary shrink-0">
-                                        <span class="material-symbols-outlined" style="font-size: 16px;">agriculture</span>
-                                    </div>
-                                    <span class="font-body text-table-data font-semibold text-text-primary">Bawang Merah</span>
-                                </div>
-                            </td>
-                            <td class="px-lg py-md text-right font-mono text-numeric-mono text-text-secondary">Rp 28.000</td>
-                            <td class="px-lg py-md text-right font-mono text-numeric-mono font-bold text-text-primary">Rp 30.500</td>
-                            <td class="px-lg py-md text-center">
-                                <span class="px-3 py-1 rounded-lg bg-margin-warning/15 text-margin-warning font-bold text-label-caps">8.9%</span>
-                            </td>
-                            <td class="px-lg py-md text-center">
-                                <a href="#" class="material-symbols-outlined text-text-secondary hover:text-primary transition-colors">edit_square</a>
-                            </td>
-                        </tr>
-
-                        {{-- Row: Tomat Cherry (margin aman) --}}
-                        <tr class="hover:bg-primary/5 transition-colors">
-                            <td class="px-lg py-md">
-                                <div class="flex items-center gap-md">
-                                    <div class="w-8 h-8 rounded bg-surface-container flex items-center justify-center text-text-secondary shrink-0">
-                                        <span class="material-symbols-outlined" style="font-size: 16px;">eco</span>
-                                    </div>
-                                    <span class="font-body text-table-data font-semibold text-text-primary">Tomat Cherry</span>
-                                </div>
-                            </td>
-                            <td class="px-lg py-md text-right font-mono text-numeric-mono text-text-secondary">Rp 18.000</td>
-                            <td class="px-lg py-md text-right font-mono text-numeric-mono font-bold text-text-primary">Rp 20.000</td>
-                            <td class="px-lg py-md text-center">
-                                <span class="px-3 py-1 rounded-lg bg-margin-success/15 text-margin-success font-bold text-label-caps">11.1%</span>
-                            </td>
-                            <td class="px-lg py-md text-center">
-                                <a href="#" class="material-symbols-outlined text-text-secondary hover:text-primary transition-colors">edit_square</a>
-                            </td>
-                        </tr>
+                                </td>
+                                <td class="px-lg py-md text-right font-mono text-numeric-mono text-text-secondary">
+                                    Rp {{ number_format($p->harga_modal_per_satuan_dasar, 0, ',', '.') }}
+                                </td>
+                                <td class="px-lg py-md text-right font-mono text-numeric-mono text-text-secondary">
+                                    @if($p->is_margin_tipis)
+                                        <span class="text-xs text-margin-danger">Peringatan Margin</span>
+                                    @elseif($p->is_belum_update)
+                                        <span class="text-xs text-text-secondary">Lama tak update</span>
+                                    @endif
+                                </td>
+                                <td class="px-lg py-md text-center">
+                                    @if($p->is_margin_tipis)
+                                        <span class="px-3 py-1 rounded-lg {{ $p->margin_kritis < 10 ? 'bg-margin-danger/15 text-margin-danger' : 'bg-margin-warning/15 text-margin-warning' }} font-bold text-label-caps">
+                                            {{ $p->margin_kritis }}%
+                                        </span>
+                                    @elseif($p->is_belum_update)
+                                        <span class="px-3 py-1 rounded-lg bg-margin-danger/15 text-margin-danger font-bold text-label-caps">
+                                            >3 HARI
+                                        </span>
+                                    @endif
+                                </td>
+                                <td class="px-lg py-md text-center">
+                                    <a href="{{ route('produk.edit', $p->id) }}" class="material-symbols-outlined text-text-secondary hover:text-primary transition-colors">edit_square</a>
+                                </td>
+                            </tr>
+                        @empty
+                            <tr>
+                                <td colspan="5" class="px-lg py-xl text-center text-text-secondary text-body-md">
+                                    <span class="material-symbols-outlined block mx-auto mb-sm" style="font-size:32px;opacity:.3">check_circle</span>
+                                    Semua produk dalam kondisi aman.
+                                </td>
+                            </tr>
+                        @endforelse
 
                     </tbody>
                 </table>
             </div>
         </div>
 
-        {{-- Panel Tren Harga (1/3 lebar) --}}
+        {{-- Panel Terlaris (1/3 lebar) --}}
         <div class="space-y-md">
             <div class="flex items-center justify-between mb-sm">
-                <h2 class="font-headline text-headline-md text-text-primary">Tren Harga (7 Hari)</h2>
-                <span class="material-symbols-outlined text-text-secondary">show_chart</span>
+                <h2 class="font-headline text-headline-md text-text-primary">Terlaris (7 Hari)</h2>
+                <span class="material-symbols-outlined text-text-secondary">workspace_premium</span>
             </div>
 
             <div class="bg-surface-container-lowest rounded-xl border border-table-border p-md divide-y divide-table-border">
 
-                {{-- Tren: Beras Cianjur (naik) --}}
-                <div class="py-sm flex items-center justify-between gap-md">
-                    <div class="min-w-0">
-                        <p class="font-body text-table-data font-bold text-text-primary truncate">Beras Cianjur</p>
-                        <p class="text-xs text-text-secondary">Rp 14.000/kg</p>
+                @forelse($produkTerlaris as $pt)
+                    <div class="py-sm flex items-center justify-between gap-md">
+                        <div class="min-w-0">
+                            <p class="font-body text-table-data font-bold text-text-primary truncate">{{ $pt->produk_nama }}</p>
+                        </div>
+                        <span class="text-text-primary text-xs font-bold shrink-0">
+                            {{ number_format($pt->total_terjual_satuan_dasar, 0, ',', '.') }} Terjual
+                        </span>
                     </div>
-                    <div class="w-20 h-10 shrink-0">
-                        <svg class="w-full h-full overflow-visible" viewBox="0 0 100 30">
-                            <path class="sparkline" d="M0,25 L20,20 L40,22 L60,15 L80,10 L100,5"
-                                  fill="none" stroke="#4CAF50" stroke-width="2" stroke-linecap="round"/>
-                        </svg>
+                @empty
+                    <div class="py-xl text-center text-text-secondary text-body-md">
+                        <span class="material-symbols-outlined block mx-auto mb-sm" style="font-size:32px;opacity:.3">receipt_long</span>
+                        Belum ada penjualan.
                     </div>
-                    <span class="text-margin-success text-xs font-bold shrink-0">+2.1%</span>
-                </div>
-
-                {{-- Tren: Cabai Rawit (turun) --}}
-                <div class="py-sm flex items-center justify-between gap-md">
-                    <div class="min-w-0">
-                        <p class="font-body text-table-data font-bold text-text-primary truncate">Cabai Rawit</p>
-                        <p class="text-xs text-text-secondary">Rp 46.500/kg</p>
-                    </div>
-                    <div class="w-20 h-10 shrink-0">
-                        <svg class="w-full h-full overflow-visible" viewBox="0 0 100 30">
-                            <path class="sparkline" d="M0,5 L20,15 L40,12 L60,20 L80,25 L100,28"
-                                  fill="none" stroke="#D32F2F" stroke-width="2" stroke-linecap="round"/>
-                        </svg>
-                    </div>
-                    <span class="text-margin-danger text-xs font-bold shrink-0">-4.5%</span>
-                </div>
-
-                {{-- Tren: Bawang Merah (sedikit naik) --}}
-                <div class="py-sm flex items-center justify-between gap-md">
-                    <div class="min-w-0">
-                        <p class="font-body text-table-data font-bold text-text-primary truncate">Bawang Merah</p>
-                        <p class="text-xs text-text-secondary">Rp 30.500/kg</p>
-                    </div>
-                    <div class="w-20 h-10 shrink-0">
-                        <svg class="w-full h-full overflow-visible" viewBox="0 0 100 30">
-                            <path class="sparkline" d="M0,20 L20,18 L40,15 L60,16 L80,14 L100,12"
-                                  fill="none" stroke="#4CAF50" stroke-width="2" stroke-linecap="round"/>
-                        </svg>
-                    </div>
-                    <span class="text-margin-success text-xs font-bold shrink-0">+1.2%</span>
-                </div>
-
-                {{-- Tren: Minyak Goreng (stabil) --}}
-                <div class="py-sm flex items-center justify-between gap-md">
-                    <div class="min-w-0">
-                        <p class="font-body text-table-data font-bold text-text-primary truncate">Minyak Goreng</p>
-                        <p class="text-xs text-text-secondary">Rp 17.500/lt</p>
-                    </div>
-                    <div class="w-20 h-10 shrink-0">
-                        <svg class="w-full h-full overflow-visible" viewBox="0 0 100 30">
-                            <path class="sparkline" d="M0,15 L20,15 L40,16 L60,15 L80,15 L100,15"
-                                  fill="none" stroke="#FFB300" stroke-width="2" stroke-linecap="round"/>
-                        </svg>
-                    </div>
-                    <span class="text-text-secondary text-xs font-bold shrink-0">0.0%</span>
-                </div>
+                @endforelse
 
             </div>
         </div>
