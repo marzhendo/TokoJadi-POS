@@ -7,9 +7,7 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+Route::get('/dashboard', [App\Http\Controllers\DashboardController::class, 'index'])->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -19,6 +17,7 @@ Route::middleware('auth')->group(function () {
     Route::resource('kategori', App\Http\Controllers\KategoriController::class);
     Route::resource('satuan', App\Http\Controllers\SatuanController::class);
     Route::resource('produk', App\Http\Controllers\ProdukController::class);
+    Route::patch('produk/{produk}/toggle-aktif', [App\Http\Controllers\ProdukController::class, 'toggleAktif'])->name('produk.toggle-aktif');
     Route::resource('transaksi', App\Http\Controllers\TransaksiController::class);
     
     // Laporan

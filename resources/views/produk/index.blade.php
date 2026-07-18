@@ -2,12 +2,20 @@
     <x-slot name="pageTitle">Master Produk</x-slot>
 
     <x-slot name="search">
-        <div class="flex items-center gap-sm px-md py-2 bg-surface-container-lowest border border-outline-variant rounded-full w-80">
+        <form action="{{ route('produk.index') }}" method="GET" class="flex items-center gap-sm px-md py-2 bg-surface-container-lowest border border-outline-variant rounded-full w-80">
             <span class="material-symbols-outlined text-text-secondary" style="font-size:18px">search</span>
             <input type="text"
+                   name="search"
+                   value="{{ request('search') }}"
                    placeholder="Cari nama produk..."
                    class="bg-transparent border-none focus:ring-0 text-body-md w-full placeholder:text-text-secondary p-0">
-        </div>
+            @if(request('kategori_id'))
+                <input type="hidden" name="kategori_id" value="{{ request('kategori_id') }}">
+            @endif
+            @if(request('status'))
+                <input type="hidden" name="status" value="{{ request('status') }}">
+            @endif
+        </form>
     </x-slot>
 
     {{-- Breadcrumb + CTA --}}
@@ -86,7 +94,7 @@
             <tbody class="divide-y divide-table-border">
                 @forelse($produk as $p)
                     @php $status = $p->statusStok(); @endphp
-                    <tr class="hover:bg-primary/5 transition-colors">
+                    <tr class="hover:bg-primary/5 transition-colors {{ !$p->aktif ? 'opacity-50 grayscale bg-surface-container-lowest' : '' }}">
 
                         {{-- Nama --}}
                         <td class="px-lg py-md">
@@ -131,7 +139,11 @@
 
                         {{-- Status badge — token sesuai SKILL: laravel-design-tokens --}}
                         <td class="px-lg py-md text-center">
-                            @if($status === 'tersedia')
+                            @if(!$p->aktif)
+                                <span class="px-sm py-1 rounded-lg bg-surface-container-high text-text-secondary font-mono text-label-caps border border-outline-variant">
+                                    NON-AKTIF
+                                </span>
+                            @elseif($status === 'tersedia')
                                 <span class="px-sm py-1 rounded-lg bg-margin-success/15 text-margin-success font-mono text-label-caps border border-margin-success/30">
                                     TERSEDIA
                                 </span>
@@ -149,20 +161,32 @@
                         {{-- Aksi --}}
                         <td class="px-lg py-md">
                             <div class="flex items-center justify-center gap-sm">
-                                <a href="{{ route('produk.edit', $p) }}"
-                                   title="Edit"
-                                   class="p-2 text-text-secondary hover:text-primary hover:bg-primary-container/10 rounded-lg transition-all">
-                                    <span class="material-symbols-outlined" style="font-size:20px">edit_note</span>
-                                </a>
-                                <form method="POST" action="{{ route('produk.destroy', $p) }}"
-                                      onsubmit="return confirm('Hapus produk {{ addslashes($p->nama) }}?')">
-                                    @csrf @method('DELETE')
-                                    <button type="submit"
-                                            title="Hapus"
-                                            class="p-2 text-text-secondary hover:text-margin-danger hover:bg-margin-danger/10 rounded-lg transition-all">
-                                        <span class="material-symbols-outlined" style="font-size:20px">delete</span>
-                                    </button>
-                                </form>
+                                @if($p->aktif)
+                                    <a href="{{ route('produk.edit', $p) }}"
+                                       title="Edit"
+                                       class="p-2 text-text-secondary hover:text-primary hover:bg-primary-container/10 rounded-lg transition-all">
+                                        <span class="material-symbols-outlined" style="font-size:20px">edit_note</span>
+                                    </a>
+                                    <form method="POST" action="{{ route('produk.destroy', $p) }}"
+                                          onsubmit="return confirm('Hapus produk {{ addslashes($p->nama) }}?')">
+                                        @csrf @method('DELETE')
+                                        <button type="submit"
+                                                title="Hapus"
+                                                class="p-2 text-text-secondary hover:text-margin-danger hover:bg-margin-danger/10 rounded-lg transition-all">
+                                            <span class="material-symbols-outlined" style="font-size:20px">delete</span>
+                                        </button>
+                                    </form>
+                                @else
+                                    <form method="POST" action="{{ route('produk.toggle-aktif', $p) }}"
+                                          onsubmit="return confirm('Aktifkan kembali produk {{ addslashes($p->nama) }}?')">
+                                        @csrf @method('PATCH')
+                                        <button type="submit"
+                                                title="Aktifkan Lagi"
+                                                class="px-3 py-1.5 bg-surface-container-high text-text-primary rounded-lg font-bold text-xs hover:bg-primary hover:text-on-primary transition-all flex items-center gap-1 shadow-sm border border-outline-variant">
+                                            <span class="material-symbols-outlined" style="font-size:16px">restore</span> Aktifkan
+                                        </button>
+                                    </form>
+                                @endif
                             </div>
                         </td>
 
