@@ -77,11 +77,35 @@
             <!-- Form Submit (Total & Actions) -->
             <form id="pos-form" action="{{ route('transaksi.store') }}" method="POST" class="p-4 border-t border-table-border bg-surface-container-lowest rounded-b-xl">
                 @csrf
-                <input type="hidden" name="metode_bayar" value="cash">
                 
+                <div class="mb-4 space-y-3">
+                    <div>
+                        <label class="block text-xs font-bold text-text-secondary mb-1">METODE PEMBAYARAN</label>
+                        <select name="metode_bayar" id="select-metode-bayar" class="w-full px-3 py-2 bg-surface border border-outline-variant rounded-lg text-sm focus:ring-1 focus:ring-primary focus:border-primary">
+                            <option value="cash" {{ old('metode_bayar') == 'cash' ? 'selected' : '' }}>Cash / Tunai</option>
+                            <option value="kasbon" {{ old('metode_bayar') == 'kasbon' ? 'selected' : '' }}>Kasbon / Piutang</option>
+                        </select>
+                    </div>
+
+                    <div id="container-pelanggan" class="{{ old('metode_bayar') == 'kasbon' ? '' : 'hidden' }}">
+                        <label class="block text-xs font-bold text-text-secondary mb-1 flex justify-between items-center">
+                            <span>PELANGGAN <span class="text-margin-danger">*</span></span>
+                            <a href="{{ route('pelanggan.create') }}" target="_blank" class="text-primary hover:underline text-xs flex items-center">
+                                <span class="material-symbols-outlined text-[14px] mr-1">person_add</span> Tambah Baru
+                            </a>
+                        </label>
+                        <select name="pelanggan_id" id="select-pelanggan" class="w-full px-3 py-2 bg-surface border border-outline-variant rounded-lg text-sm focus:ring-1 focus:ring-primary focus:border-primary">
+                            <option value="">-- Pilih Pelanggan --</option>
+                            @foreach($pelangganList as $p)
+                                <option value="{{ $p->id }}" {{ old('pelanggan_id') == $p->id ? 'selected' : '' }}>{{ $p->nama }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                </div>
+
                 <div id="hidden-inputs-container"></div>
                 
-                <div class="flex justify-between items-end mb-4">
+                <div class="flex justify-between items-end mb-4 pt-3 border-t border-table-border">
                     <span class="text-sm font-bold text-text-secondary">TOTAL</span>
                     <span id="display-total" class="font-display-price text-3xl font-bold text-primary">Rp 0</span>
                 </div>
@@ -277,6 +301,17 @@ document.addEventListener('DOMContentLoaded', function() {
     document.getElementById('pos-form').addEventListener('keypress', function(e) {
         if (e.key === 'Enter' && e.target.id !== 'btn-submit') {
             e.preventDefault();
+        }
+    });
+
+    // Toggle Pelanggan Dropdown
+    const selectMetodeBayar = document.getElementById('select-metode-bayar');
+    const containerPelanggan = document.getElementById('container-pelanggan');
+    selectMetodeBayar.addEventListener('change', function() {
+        if (this.value === 'kasbon') {
+            containerPelanggan.classList.remove('hidden');
+        } else {
+            containerPelanggan.classList.add('hidden');
         }
     });
 

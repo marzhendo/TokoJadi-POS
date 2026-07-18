@@ -25,8 +25,15 @@ class StoreTransaksiRequest extends FormRequest
     public function rules(): array
     {
         return [
-            // Implicit v1 cash only
-            'metode_bayar' => ['required', Rule::in(['cash'])],
+            // Update v2: cash or kasbon
+            'metode_bayar' => ['required', Rule::in(['cash', 'kasbon'])],
+            
+            'pelanggan_id' => [
+                'nullable',
+                Rule::requiredIf(fn() => $this->metode_bayar === 'kasbon'),
+                'integer',
+                Rule::exists('pelanggan', 'id')
+            ],
             
             // Validasi keranjang items
             'items' => ['required', 'array', 'min:1'],

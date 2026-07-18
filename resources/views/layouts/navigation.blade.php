@@ -128,6 +128,34 @@
                 storefront
             </span>
         </a>
+
+        <div class="h-px bg-outline-variant/30 my-2 mx-2"></div>
+
+        {{-- Kasbon / Piutang --}}
+        <a href="{{ route('kasbon.index') }}"
+           title="Manajemen Kasbon"
+           class="p-3 rounded-xl transition-colors duration-150
+                  {{ request()->routeIs('kasbon.*')
+                      ? 'bg-secondary-container text-on-secondary-container'
+                      : 'text-on-surface-variant hover:bg-surface-container-high' }}">
+            <span class="material-symbols-outlined"
+                  @if(request()->routeIs('kasbon.*')) style="font-variation-settings: 'FILL' 1;" @endif>
+                receipt_long
+            </span>
+        </a>
+
+        {{-- Pelanggan --}}
+        <a href="{{ route('pelanggan.index') }}"
+           title="Master Pelanggan"
+           class="p-3 rounded-xl transition-colors duration-150
+                  {{ request()->routeIs('pelanggan.*')
+                      ? 'bg-secondary-container text-on-secondary-container'
+                      : 'text-on-surface-variant hover:bg-surface-container-high' }}">
+            <span class="material-symbols-outlined"
+                  @if(request()->routeIs('pelanggan.*')) style="font-variation-settings: 'FILL' 1;" @endif>
+                groups
+            </span>
+        </a>
     </div>
 
     {{-- Bottom: settings --}}

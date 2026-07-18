@@ -31,7 +31,9 @@ class TransaksiController extends Controller
     {
         // Load all active products with their active satuan_jual to populate JS cart
         $produkList = Produk::with(['satuanDasar', 'satuanJual' => fn($q) => $q->where('aktif', true)])->get();
-        return view('transaksi.create', compact('produkList'));
+        // Load all pelanggan to populate dropdown
+        $pelangganList = \App\Models\Pelanggan::orderBy('nama')->get();
+        return view('transaksi.create', compact('produkList', 'pelangganList'));
     }
 
     public function store(StoreTransaksiRequest $request): RedirectResponse
@@ -63,6 +65,8 @@ class TransaksiController extends Controller
             $transaksi = Transaksi::create([
                 'tanggal' => now(),
                 'metode_bayar' => $data['metode_bayar'],
+                'pelanggan_id' => $data['metode_bayar'] === 'kasbon' ? $data['pelanggan_id'] : null,
+                'status_kasbon' => $data['metode_bayar'] === 'kasbon' ? 'belum_lunas' : null,
                 'total_belanja' => 0,
             ]);
 
