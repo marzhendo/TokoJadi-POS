@@ -3,14 +3,15 @@
 
     {{-- Search di topbar --}}
     <x-slot name="search">
-        <div class="relative hidden md:block">
+        <form action="{{ route('produk.index') }}" method="GET" class="relative hidden md:block">
             <input
                 type="text"
+                name="search"
                 placeholder="Cari Produk..."
                 class="bg-surface-container-low border-none rounded-full px-lg py-2 w-64 text-body-md focus:ring-2 focus:ring-primary focus:outline-none"
             >
             <span class="material-symbols-outlined absolute right-4 top-1/2 -translate-y-1/2 text-text-secondary">search</span>
-        </div>
+        </form>
     </x-slot>
 
     {{-- === Summary Bento Grid === --}}

@@ -2,12 +2,20 @@
     <x-slot name="pageTitle">Master Produk</x-slot>
 
     <x-slot name="search">
-        <div class="flex items-center gap-sm px-md py-2 bg-surface-container-lowest border border-outline-variant rounded-full w-80">
+        <form action="{{ route('produk.index') }}" method="GET" class="flex items-center gap-sm px-md py-2 bg-surface-container-lowest border border-outline-variant rounded-full w-80">
             <span class="material-symbols-outlined text-text-secondary" style="font-size:18px">search</span>
             <input type="text"
+                   name="search"
+                   value="{{ request('search') }}"
                    placeholder="Cari nama produk..."
                    class="bg-transparent border-none focus:ring-0 text-body-md w-full placeholder:text-text-secondary p-0">
-        </div>
+            @if(request('kategori_id'))
+                <input type="hidden" name="kategori_id" value="{{ request('kategori_id') }}">
+            @endif
+            @if(request('status'))
+                <input type="hidden" name="status" value="{{ request('status') }}">
+            @endif
+        </form>
     </x-slot>
 
     {{-- Breadcrumb + CTA --}}

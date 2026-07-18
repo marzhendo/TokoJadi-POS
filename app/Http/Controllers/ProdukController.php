@@ -16,6 +16,7 @@ class ProdukController extends Controller
     {
         $produk = Produk::query()
             ->with(['kategori', 'satuanDasar', 'satuanJual'])
+            ->when(request('search'), fn ($q, $v) => $q->where('nama', 'like', "%{$v}%"))
             ->when(request('kategori_id'), fn ($q, $v) => $q->where('kategori_id', $v))
             ->when(request('status'), function ($q, $v) {
                 match ($v) {
