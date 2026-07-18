@@ -82,11 +82,10 @@ graph TD
 
 Proyek ini ditenagai oleh perpaduan teknologi modern dan tangguh:
 
-*   **Backend:** [Laravel 11](https://laravel.com/) (PHP) – *Framework MVC yang andal dan aman.*
-*   **Frontend:** [Blade Templates](https://laravel.com/docs/blade) dipadukan dengan [Tailwind CSS](https://tailwindcss.com/) untuk antarmuka yang sangat responsif, cantik, dan konsisten (menggunakan desain sistem token).
-*   **Interaktivitas UI:** [Alpine.js](https://alpinejs.dev/) – *Untuk menangani modal, notifikasi, dan interaksi form dinamis tanpa memberatkan DOM.*
-*   **Database:** Relational Database (MySQL / SQLite) yang dirancang kuat menjaga integritas transaksi dengan perlindungan *Foreign Key*.
-*   **Iconography:** Google Material Symbols.
+*   ![Laravel](https://img.shields.io/badge/laravel-%23FF2D20.svg?style=for-the-badge&logo=laravel&logoColor=white) **Backend:** Laravel 11 (PHP) – Framework MVC yang andal dan aman.
+*   ![TailwindCSS](https://img.shields.io/badge/tailwindcss-%2338B2AC.svg?style=for-the-badge&logo=tailwind-css&logoColor=white) **Frontend:** Blade Templates dipadukan dengan Tailwind CSS untuk antarmuka yang sangat responsif, cantik, dan konsisten (menggunakan desain sistem token).
+*   ![Alpine.js](https://img.shields.io/badge/alpinejs-%238BC0D0.svg?style=for-the-badge&logo=alpine.js&logoColor=white) **Interaktivitas UI:** Alpine.js – Untuk menangani modal, notifikasi, dan interaksi form dinamis tanpa memberatkan DOM.
+*   ![MySQL](https://img.shields.io/badge/mysql-%234479A1.svg?style=for-the-badge&logo=mysql&logoColor=white) **Database:** Relational Database (MySQL / SQLite) yang dirancang kuat menjaga integritas transaksi dengan perlindungan Foreign Key.
 
 ---
 <br>
