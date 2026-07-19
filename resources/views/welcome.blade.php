@@ -151,7 +151,7 @@
 </div>
 <!-- Action Section -->
 <footer class="w-full pt-md">
-<button class="w-full py-md px-lg bg-primary-container text-on-primary font-body-md text-body-lg font-bold rounded-lg shadow-sm border border-primary/10 hover:bg-primary transition-all duration-200 btn-active-state flex items-center justify-center gap-sm" onclick="window.location.href='{{ route(\'login\') }}'">
+<button class="w-full py-md px-lg bg-primary-container text-on-primary font-body-md text-body-lg font-bold rounded-lg shadow-sm border border-primary/10 hover:bg-primary transition-all duration-200 btn-active-state flex items-center justify-center gap-sm" onclick="window.location.href='{{ route('login') }}'">
                     Masuk
                     <span class="material-symbols-outlined" style="font-size: 20px;">arrow_forward</span>
 </button>
