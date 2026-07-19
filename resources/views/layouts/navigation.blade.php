@@ -1,6 +1,6 @@
 {{-- Sidebar navigasi vertikal — 80px, fixed kiri, icon-only --}}
 {{-- Sesuai desain Stitch "Dashboard Utama - Toko Jadi" --}}
-<nav class="fixed left-0 top-0 h-full w-20 z-50 flex flex-col items-center py-md bg-surface-container-lowest border-r border-table-border">
+<nav class="hidden sm:flex fixed left-0 top-0 h-full w-20 z-50 flex-col items-center py-md bg-surface-container-lowest border-r border-table-border">
     {{-- Logo / Brand --}}
     <div class="mb-xl">
         <a href="{{ route('dashboard') }}" title="Toko Jadi POS">

@@ -79,7 +79,8 @@
 
     {{-- Data Table --}}
     <div class="bg-surface-container-lowest border border-table-border rounded-xl overflow-hidden">
-        <table class="w-full text-left border-collapse">
+        <div class="overflow-x-auto w-full">
+<table class="w-full text-left border-collapse">
             <thead class="bg-surface-container-low border-b border-table-border">
                 <tr>
                     <th class="px-lg py-md font-mono text-label-caps text-text-secondary uppercase">Nama Produk</th>
@@ -201,6 +202,7 @@
                 @endforelse
             </tbody>
         </table>
+</div>
 
         {{-- Pagination --}}
         @if($produk->hasPages())
