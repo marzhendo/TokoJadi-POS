@@ -76,7 +76,7 @@
                                         <button type="button" 
                                                 onclick="openBayarModal('{{ $t->id }}', '{{ $t->pelanggan->nama }}', {{ $t->sisaKasbon() }})"
                                                 class="inline-flex items-center justify-center px-3 py-1.5 bg-primary-container text-primary-on-container text-xs font-bold rounded-lg hover:brightness-95 transition-all">
-                                            <span class="material-symbols-outlined text-[16px] mr-1">payments</span>
+                                            <span class="material-symbols-outlined text-base mr-1">payments</span>
                                             Terima Cicilan
                                         </button>
                                     </td>

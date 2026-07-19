@@ -49,7 +49,7 @@
                                     </td>
                                     <td class="py-3 px-4 text-center">
                                         <a href="{{ route('pelanggan.show', $p->id) }}" class="inline-flex items-center justify-center px-3 py-1.5 bg-secondary-container text-secondary-on-container text-xs font-bold rounded-lg hover:brightness-95 transition-all">
-                                            <span class="material-symbols-outlined text-[16px] mr-1">menu_book</span>
+                                            <span class="material-symbols-outlined text-base mr-1">menu_book</span>
                                             Buku Kasbon
                                         </a>
                                     </td>

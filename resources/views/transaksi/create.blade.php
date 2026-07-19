@@ -61,7 +61,7 @@
         </div>
 
         <!-- Kanan: Keranjang -->
-        <div class="bg-surface-white border border-table-border flex flex-col rounded-xl shadow-sm h-[500px] md:h-auto">
+        <div class="bg-surface-white border border-table-border flex flex-col rounded-xl shadow-sm h-96 md:h-auto">
             <div class="p-4 border-b border-table-border bg-surface-container-low rounded-t-xl">
                 <h2 class="text-headline-md font-bold text-primary">Keranjang Belanja</h2>
             </div>
@@ -91,7 +91,7 @@
                         <label class="block text-xs font-bold text-text-secondary mb-1 flex justify-between items-center">
                             <span>PELANGGAN <span class="text-margin-danger">*</span></span>
                             <a href="{{ route('pelanggan.create') }}" target="_blank" class="text-primary hover:underline text-xs flex items-center">
-                                <span class="material-symbols-outlined text-[14px] mr-1">person_add</span> Tambah Baru
+                                <span class="material-symbols-outlined text-sm mr-1">person_add</span> Tambah Baru
                             </a>
                         </label>
                         <select name="pelanggan_id" id="select-pelanggan" class="w-full px-3 py-2 bg-surface border border-outline-variant rounded-lg text-sm focus:ring-1 focus:ring-primary focus:border-primary">

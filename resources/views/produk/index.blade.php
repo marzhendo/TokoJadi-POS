@@ -79,8 +79,9 @@
 
     {{-- Data Table --}}
     <div class="bg-surface-container-lowest border border-table-border rounded-xl overflow-hidden">
-        <div class="overflow-x-auto w-full">
-<table class="w-full text-left border-collapse">
+        {{-- Desktop View --}}
+        <div class="hidden sm:block overflow-x-auto w-full">
+            <table class="w-full text-left border-collapse">
             <thead class="bg-surface-container-low border-b border-table-border">
                 <tr>
                     <th class="px-lg py-md font-mono text-label-caps text-text-secondary uppercase">Nama Produk</th>
@@ -202,7 +203,72 @@
                 @endforelse
             </tbody>
         </table>
-</div>
+        </div>
+
+        {{-- Mobile View --}}
+        <div class="block sm:hidden divide-y divide-table-border">
+            @forelse($produk as $p)
+                @php $status = $p->statusStok(); @endphp
+                <div class="p-4 {{ !$p->aktif ? 'opacity-50 bg-surface-container-lowest grayscale' : 'hover:bg-primary/5 transition-colors' }}">
+                    <div class="flex justify-between items-start mb-2">
+                        <div class="flex items-center gap-3">
+                            <div class="w-10 h-10 bg-surface-container rounded-lg flex items-center justify-center shrink-0">
+                                <span class="material-symbols-outlined text-primary" style="font-size:20px">inventory_2</span>
+                            </div>
+                            <div>
+                                <p class="font-bold text-text-primary">{{ $p->nama }}</p>
+                                <p class="text-xs text-text-secondary">Kategori: {{ strtoupper($p->kategori->nama) }}</p>
+                            </div>
+                        </div>
+                        <div>
+                            @if(!$p->aktif)
+                                <span class="px-2 py-1 rounded-lg bg-surface-container-high text-text-secondary font-mono text-label-caps border border-outline-variant">NON-AKTIF</span>
+                            @elseif($status === 'tersedia')
+                                <span class="px-2 py-1 rounded-lg bg-margin-success/15 text-margin-success font-mono text-label-caps border border-margin-success/30">TERSEDIA</span>
+                            @elseif($status === 'menipis')
+                                <span class="px-2 py-1 rounded-lg bg-margin-warning/15 text-margin-warning font-mono text-label-caps border border-margin-warning/30">MENIPIS</span>
+                            @else
+                                <span class="px-2 py-1 rounded-lg bg-margin-danger/15 text-margin-danger font-mono text-label-caps border border-margin-danger/30">HABIS</span>
+                            @endif
+                        </div>
+                    </div>
+                    <div class="flex justify-between items-end mt-4">
+                        <div>
+                            <p class="text-xs text-text-secondary mb-1">Stok & Harga</p>
+                            <p class="font-mono text-sm">
+                                <strong class="{{ $status === 'habis' ? 'text-margin-danger' : ($status === 'menipis' ? 'text-margin-warning' : 'text-text-primary') }}">{{ number_format($p->stok_saat_ini, 0, ',', '.') }}</strong> {{ $p->satuanDasar->nama }}
+                            </p>
+                            <p class="font-mono text-sm text-text-secondary">Rp {{ number_format($p->harga_modal_per_satuan_dasar, 0, ',', '.') }}/{{ $p->satuanDasar->nama }}</p>
+                        </div>
+                        <div class="flex items-center gap-2">
+                            @if($p->aktif)
+                                <a href="{{ route('produk.edit', $p) }}" class="p-2 text-text-secondary hover:text-primary hover:bg-primary-container/10 rounded-lg">
+                                    <span class="material-symbols-outlined" style="font-size:20px">edit_note</span>
+                                </a>
+                                <form method="POST" action="{{ route('produk.destroy', $p) }}" onsubmit="return confirm('Hapus produk {{ addslashes($p->nama) }}?')">
+                                    @csrf @method('DELETE')
+                                    <button type="submit" class="p-2 text-text-secondary hover:text-margin-danger hover:bg-margin-danger/10 rounded-lg">
+                                        <span class="material-symbols-outlined" style="font-size:20px">delete</span>
+                                    </button>
+                                </form>
+                            @else
+                                <form method="POST" action="{{ route('produk.toggle-aktif', $p) }}" onsubmit="return confirm('Aktifkan kembali produk {{ addslashes($p->nama) }}?')">
+                                    @csrf @method('PATCH')
+                                    <button type="submit" class="px-3 py-1.5 bg-surface-container-high text-text-primary rounded-lg font-bold text-xs shadow-sm border border-outline-variant flex items-center gap-1">
+                                        <span class="material-symbols-outlined" style="font-size:16px">restore</span> Aktifkan
+                                    </button>
+                                </form>
+                            @endif
+                        </div>
+                    </div>
+                </div>
+            @empty
+                <div class="p-8 text-center text-text-secondary">
+                    <span class="material-symbols-outlined block mx-auto mb-2" style="font-size:48px;opacity:.3">inventory_2</span>
+                    Belum ada produk. <a href="{{ route('produk.create') }}" class="text-primary font-bold hover:underline">Tambah sekarang</a>.
+                </div>
+            @endforelse
+        </div>
 
         {{-- Pagination --}}
         @if($produk->hasPages())
@@ -220,7 +286,7 @@
     {{-- FAB tambah produk --}}
     <a href="{{ route('produk.create') }}"
        id="fab-tambah-produk"
-       class="fixed bottom-lg right-lg bg-primary text-on-primary rounded-full w-14 h-14
+       class="fixed sm:bottom-lg bottom-20 right-lg bg-primary text-on-primary rounded-full w-14 h-14
               flex items-center justify-center shadow-lg hover:scale-110 active:scale-95
               transition-all duration-150 z-50 group">
         <span class="material-symbols-outlined group-hover:rotate-90 transition-transform duration-200" style="font-size:28px">add</span>

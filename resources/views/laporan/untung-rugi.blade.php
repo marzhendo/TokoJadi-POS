@@ -98,7 +98,7 @@
                                             <span class="{{ $p->untung_bersih >= 0 ? 'text-margin-success' : 'text-margin-danger' }}">
                                                 {{ $p->untung_bersih < 0 ? '-' : '' }}Rp {{ number_format(abs($p->untung_bersih), 0, ',', '.') }}
                                             </span>
-                                            <span class="text-[10px] {{ $marginPercentRow >= 0 ? 'text-margin-success' : 'text-margin-danger' }} font-bold bg-surface-container-highest px-1.5 py-0.5 rounded mt-0.5">
+                                            <span class="text-xs {{ $marginPercentRow >= 0 ? 'text-margin-success' : 'text-margin-danger' }} font-bold bg-surface-container-highest px-1.5 py-0.5 rounded mt-0.5">
                                                 {{ number_format($marginPercentRow, 1, ',', '.') }}%
                                             </span>
                                         </div>
