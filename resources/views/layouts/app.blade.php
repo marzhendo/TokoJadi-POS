@@ -25,13 +25,6 @@
                 vertical-align: middle;
                 font-size: 20px;
             }
-            @keyframes slideUp {
-                from { transform: translateY(100%); }
-                to { transform: translateY(0); }
-            }
-            .animate-slide-up {
-                animation: slideUp 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-            }
         </style>
     </head>
     <body class="font-body antialiased bg-surface text-on-surface">
@@ -40,7 +33,7 @@
             @include('layouts.navigation')
 
             <!-- Main Wrapper: topbar + content -->
-            <div class="flex flex-col flex-1 sm:ml-20 w-full overflow-hidden">
+            <div class="flex flex-col flex-1 sm:ml-20">
                 <!-- Top App Bar -->
                 <header class="sticky top-0 z-40 flex justify-between items-center w-full h-20 px-margin-desktop bg-surface border-b border-table-border">
                     <div class="flex items-center gap-md">
@@ -86,7 +79,7 @@
                 </header>
 
                 <!-- Page Content -->
-                <main class="flex-1 overflow-y-auto overflow-x-hidden p-margin-desktop bg-surface pb-28 sm:pb-margin-desktop w-full">
+                <main class="flex-1 overflow-y-auto p-margin-desktop bg-surface pb-28 sm:pb-margin-desktop">
                     @if(session('success'))
                         <div class="bg-green-100 text-green-800 px-md py-sm rounded mb-md text-body-md">
                             {{ session('success') }}
@@ -103,44 +96,44 @@
             </div>
 
             <!-- Bottom Navigation (Mobile Only) -->
-            <nav class="flex sm:hidden fixed bottom-0 left-0 w-full z-50 bg-surface-container-lowest border-t border-table-border  pb-safe">
+            <nav class="flex sm:hidden fixed bottom-0 left-0 w-full z-50 bg-surface-container-lowest border-t border-table-border shadow-[0_-4px_6px_-1px_rgba(0,0,0,0.05)] pb-safe">
                 <div class="flex justify-between items-center w-full px-2 py-2">
                     {{-- Dashboard --}}
                     <a href="{{ route('dashboard') }}" class="flex flex-col items-center flex-1 py-1 transition-colors {{ request()->routeIs('dashboard') ? 'text-primary' : 'text-text-secondary' }}">
                         <span class="material-symbols-outlined mb-1" @if(request()->routeIs('dashboard')) style="font-variation-settings: 'FILL' 1;" @endif>home</span>
-                        <span class="text-xs font-bold">Dashboard</span>
+                        <span class="text-[10px] font-bold">Dashboard</span>
                     </a>
                     
                     {{-- Kasir --}}
                     <a href="{{ route('transaksi.create') }}" class="flex flex-col items-center flex-1 py-1 transition-colors {{ request()->routeIs('transaksi.create') ? 'text-primary' : 'text-text-secondary' }}">
                         <span class="material-symbols-outlined mb-1" @if(request()->routeIs('transaksi.create')) style="font-variation-settings: 'FILL' 1;" @endif>point_of_sale</span>
-                        <span class="text-xs font-bold">Kasir</span>
+                        <span class="text-[10px] font-bold">Kasir</span>
                     </a>
                     
                     {{-- Produk --}}
                     <a href="{{ route('produk.index') }}" class="flex flex-col items-center flex-1 py-1 transition-colors {{ request()->routeIs('produk.*') ? 'text-primary' : 'text-text-secondary' }}">
                         <span class="material-symbols-outlined mb-1" @if(request()->routeIs('produk.*')) style="font-variation-settings: 'FILL' 1;" @endif>inventory_2</span>
-                        <span class="text-xs font-bold">Produk</span>
+                        <span class="text-[10px] font-bold">Produk</span>
                     </a>
                     
                     {{-- Laporan --}}
                     <a href="{{ route('laporan.penjualan') }}" class="flex flex-col items-center flex-1 py-1 transition-colors {{ request()->routeIs('laporan.*') ? 'text-primary' : 'text-text-secondary' }}">
                         <span class="material-symbols-outlined mb-1" @if(request()->routeIs('laporan.*')) style="font-variation-settings: 'FILL' 1;" @endif>analytics</span>
-                        <span class="text-xs font-bold">Laporan</span>
+                        <span class="text-[10px] font-bold">Laporan</span>
                     </a>
                     
                     {{-- Lainnya (Toggle Modal/Dropdown) --}}
                     <button onclick="document.getElementById('mobile-more-menu').classList.toggle('hidden')" class="flex flex-col items-center flex-1 py-1 transition-colors text-text-secondary">
                         <span class="material-symbols-outlined mb-1">menu</span>
-                        <span class="text-xs font-bold">Lainnya</span>
+                        <span class="text-[10px] font-bold">Lainnya</span>
                     </button>
                 </div>
             </nav>
 
             <!-- Mobile More Menu (Bottom Sheet) -->
-            <div id="mobile-more-menu" class="hidden sm:hidden fixed inset-0 z-50 flex flex-col justify-end">
-                <div class="absolute inset-0 bg-black/50 backdrop-blur-sm" onclick="document.getElementById('mobile-more-menu').classList.add('hidden')"></div>
-                <div class="relative w-full bg-surface-container-lowest rounded-t-2xl shadow-lg border-t border-table-border p-md flex flex-col space-y-2 pb-8 animate-slide-up">
+            <div id="mobile-more-menu" class="hidden sm:hidden fixed inset-0 z-50">
+                <div class="absolute inset-0 bg-black/50" onclick="document.getElementById('mobile-more-menu').classList.add('hidden')"></div>
+                <div class="absolute bottom-[60px] left-0 w-full bg-surface-container-lowest rounded-t-2xl shadow-lg border-t border-table-border p-md flex flex-col space-y-2 pb-8">
                     <div class="w-12 h-1 bg-table-border rounded-full mx-auto mb-4"></div>
                     
                     <a href="{{ route('transaksi.index') }}" class="flex items-center gap-md p-3 rounded-xl hover:bg-surface-container-high transition-colors {{ request()->routeIs('transaksi.index') ? 'text-primary font-bold' : 'text-on-surface' }}">

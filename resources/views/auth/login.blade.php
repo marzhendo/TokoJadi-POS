@@ -181,7 +181,7 @@
 <label class="font-body-md text-body-md text-text-secondary select-none" for="remember_me">Ingat perangkat ini</label>
 </div>
 <!-- Submit Button -->
-<button class="w-full bg-primary-container text-on-primary-container py-md rounded-lg font-headline-md text-headline-md hover:opacity-90 active:scale-95 transition-all flex items-center justify-center gap-sm mt-lg" type="submit">
+<button class="w-full bg-primary-container text-on-primary-container py-md rounded-lg font-headline-md text-headline-md hover:opacity-90 active:scale-[0.98] transition-all flex items-center justify-center gap-sm mt-lg" type="submit">
 <span>Masuk</span>
 <span class="material-symbols-outlined text-xl" data-icon="login">login</span>
 </button>

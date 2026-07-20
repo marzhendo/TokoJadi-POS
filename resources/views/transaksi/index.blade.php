@@ -1,7 +1,7 @@
 <x-app-layout>
     <x-slot name="pageTitle">Riwayat Transaksi</x-slot>
 
-<div class="mb-6 flex flex-col sm:flex-row sm:items-end justify-between gap-4">
+<div class="mb-6 flex justify-between items-end">
     <div>
         <h1 class="font-headline-lg text-headline-lg text-text-primary font-bold">Riwayat Transaksi</h1>
         <p class="text-text-secondary font-body-md text-sm">Daftar semua transaksi yang telah selesai.</p>
@@ -13,7 +13,7 @@
 </div>
 
 <div class="bg-surface-white border border-table-border rounded-xl shadow-sm mb-6 p-4">
-    <form action="{{ route('transaksi.index') }}" method="GET" class="flex flex-col sm:flex-row sm:items-end gap-4">
+    <form action="{{ route('transaksi.index') }}" method="GET" class="flex items-end gap-4">
         <div>
             <label class="block text-xs font-bold text-text-secondary mb-1">DARI TANGGAL</label>
             <input type="date" name="dari" value="{{ request('dari') }}" class="px-3 py-2 bg-surface border border-outline-variant rounded-lg text-sm focus:ring-1 focus:ring-primary">
@@ -57,9 +57,9 @@
                         </td>
                         <td class="p-4 align-top">
                             @if($trx->metode_bayar === 'cash')
-                                <span class="px-2 py-1 bg-success-margin/10 text-success-margin text-xs font-bold rounded-lg border border-success-margin/20 uppercase tracking-wider">CASH</span>
+                                <span class="px-2 py-1 bg-success-margin/10 text-success-margin text-[11px] font-bold rounded-lg border border-success-margin/20 uppercase tracking-wider">CASH</span>
                             @else
-                                <span class="px-2 py-1 bg-warning-margin/10 text-warning-margin text-xs font-bold rounded-lg border border-warning-margin/20 uppercase tracking-wider">KASBON</span>
+                                <span class="px-2 py-1 bg-warning-margin/10 text-warning-margin text-[11px] font-bold rounded-lg border border-warning-margin/20 uppercase tracking-wider">KASBON</span>
                             @endif
                         </td>
                         <td class="p-4 text-right align-top">
@@ -90,9 +90,9 @@
                     <div class="text-right">
                         <span class="font-numeric-mono text-primary font-bold text-lg block">Rp {{ number_format($trx->total_belanja, 0, ',', '.') }}</span>
                         @if($trx->metode_bayar === 'cash')
-                            <span class="px-2 py-1 bg-success-margin/10 text-success-margin text-xs font-bold rounded border border-success-margin/20 uppercase tracking-wider mt-1 inline-block">CASH</span>
+                            <span class="px-2 py-1 bg-success-margin/10 text-success-margin text-[10px] font-bold rounded border border-success-margin/20 uppercase tracking-wider mt-1 inline-block">CASH</span>
                         @else
-                            <span class="px-2 py-1 bg-warning-margin/10 text-warning-margin text-xs font-bold rounded border border-warning-margin/20 uppercase tracking-wider mt-1 inline-block">KASBON</span>
+                            <span class="px-2 py-1 bg-warning-margin/10 text-warning-margin text-[10px] font-bold rounded border border-warning-margin/20 uppercase tracking-wider mt-1 inline-block">KASBON</span>
                         @endif
                     </div>
                 </div>

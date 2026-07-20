@@ -147,7 +147,7 @@
                 row.innerHTML = `
                     ${idInput}
                     <div class="col-span-3">
-                        <p class="text-xs font-bold text-text-secondary mb-1">SATUAN JUAL</p>
+                        <p class="text-[10px] font-bold text-text-secondary mb-1">SATUAN JUAL</p>
                         <select name="satuan_jual[${index}][satuan_id]" required class="w-full px-3 py-2 bg-surface-container-low border border-outline-variant rounded-lg text-xs font-medium focus:ring-1 focus:ring-primary focus:border-primary">
                             ${optionsHtml}
                         </select>
@@ -156,15 +156,15 @@
                         <span class="material-symbols-outlined text-text-secondary text-sm">=</span>
                     </div>
                     <div class="col-span-2">
-                        <p class="text-xs font-bold text-text-secondary mb-1">JML KONVERSI</p>
+                        <p class="text-[10px] font-bold text-text-secondary mb-1">JML KONVERSI</p>
                         <input type="number" name="satuan_jual[${index}][jumlah_dalam_satuan_dasar]" value="${data ? parseFloat(data.jumlah_dalam_satuan_dasar) : '1'}" step="0.001" min="0.001" required class="w-full px-3 py-2 bg-white border border-outline-variant rounded-lg text-xs font-medium focus:ring-1 focus:ring-primary focus:border-primary" />
                     </div>
                     <div class="col-span-2">
-                        <p class="text-xs font-bold text-text-secondary mb-1">SATUAN DS</p>
+                        <p class="text-[10px] font-bold text-text-secondary mb-1">SATUAN DS</p>
                         <input type="text" readonly class="label-satuan-dasar w-full px-3 py-2 bg-surface-container border border-outline-variant rounded-lg text-xs font-medium cursor-not-allowed text-text-secondary" value="-" />
                     </div>
                     <div class="col-span-3">
-                        <p class="text-xs font-bold text-text-secondary mb-1">HARGA JUAL</p>
+                        <p class="text-[10px] font-bold text-text-secondary mb-1">HARGA JUAL</p>
                         <div class="flex items-center">
                             <span class="bg-surface-container border border-outline-variant border-r-0 rounded-l-lg px-2 py-2 font-bold text-xs text-text-secondary">Rp</span>
                             <input type="number" name="satuan_jual[${index}][harga_jual]" value="${data ? parseFloat(data.harga_jual) : '0'}" min="0" required class="w-full px-3 py-2 bg-white border border-outline-variant rounded-r-lg text-xs font-medium focus:ring-1 focus:ring-primary focus:border-primary" />

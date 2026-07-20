@@ -108,7 +108,7 @@
                                 </div>
                                 <div class="text-right">
                                     <span class="font-numeric-mono text-primary font-bold text-lg block">Rp {{ number_format($t->total_belanja, 0, ',', '.') }}</span>
-                                    <span class="inline-flex items-center px-2 py-1 bg-surface-container-high border border-outline-variant rounded text-xs font-bold uppercase tracking-wider text-text-secondary mt-1">
+                                    <span class="inline-flex items-center px-2 py-1 bg-surface-container-high border border-outline-variant rounded text-[10px] font-bold uppercase tracking-wider text-text-secondary mt-1">
                                         {{ $t->metode_bayar }}
                                     </span>
                                 </div>

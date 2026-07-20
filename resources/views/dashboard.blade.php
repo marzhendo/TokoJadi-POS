@@ -70,7 +70,7 @@
 
             <div class="bg-surface-container-lowest rounded-xl border border-table-border overflow-hidden">
                 <div class="overflow-x-auto w-full">
-                    <table class="w-full text-left border-collapse min-w-max">
+                    <table class="w-full text-left border-collapse min-w-[600px]">
                     <thead class="bg-surface-container-low">
                         <tr>
                             <th class="px-lg py-md font-mono text-label-caps text-text-secondary uppercase">Nama Produk</th>
@@ -166,7 +166,7 @@
     {{-- ponytail: lingkaran hijau bg-primary, icon putih, kanan bawah, hanya halaman kasir/dashboard --}}
     <a href="{{ route('produk.index', ['status' => 'menipis']) }}"
        id="fab-update-harga"
-       class="fixed bottom-20 sm:bottom-lg right-lg bg-primary hover:bg-primary-container text-on-primary rounded-full px-lg py-4 flex items-center gap-md shadow-lg transition-all duration-150 active:scale-95 z-50 group">
+       class="fixed bottom-[80px] sm:bottom-lg right-lg bg-primary hover:bg-primary-container text-on-primary rounded-full px-lg py-4 flex items-center gap-md shadow-lg transition-all duration-150 active:scale-95 z-50 group">
         <span class="material-symbols-outlined" style="font-size: 20px;">bolt</span>
         <span class="font-bold text-body-lg">Update Harga Cepat</span>
     </a>

@@ -140,12 +140,12 @@
 <h1 class="font-headline-lg text-headline-lg font-bold text-primary tracking-tight">
                     Toko Jadi
                 </h1>
-<p class="font-body-lg text-body-lg text-text-secondary max-w-xs mx-auto">
+<p class="font-body-lg text-body-lg text-text-secondary max-w-[280px] mx-auto">
                     Kelola toko hasil bumi Anda dengan mudah
                 </p>
 </header>
 <!-- Central Hero Illustration -->
-<div class="relative w-full aspect-square max-w-xs md:max-w-sm flex items-center justify-center overflow-hidden">
+<div class="relative w-full aspect-square max-w-[320px] md:max-w-[400px] flex items-center justify-center overflow-hidden">
 <!-- Using the provided linear produce illustration -->
 <img alt="AgroFlow Utility - Produce Illustration" class="w-full h-auto object-contain opacity-90 transition-opacity duration-700 hover:opacity-100" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC5KTXar57ecjeWYkz22AazQmLZwl6ZflZh6ctHNy6mkj1j-UCIicDIKHBqmsnnOyzMK_CWjcvbgVOFi-gxN5E59fcEcnrU9ic8MM_-Uhzdg3xesER6UT69-wfS05ubxgHahzFOmQ5htMvVX-LXhBY-30cPpbsSvG9Bkdx7BgeG7OS56gNism4NnmmFXOTmA2nbokuEtI3tkpU3giFJDoTaaAbkVYNZXo-CmYJr54VLYqS0sCqQwgAHHisFmiX19LZP9H0gVxsAmLY"/>
 </div>
@@ -169,7 +169,7 @@
 </div>
 </main>
 <!-- Background Atmospheric Effect (Subtle Tool-First Aesthetic) -->
-<div class="fixed inset-0 pointer-events-none -z-10 opacity-5">
+<div class="fixed inset-0 pointer-events-none z-[-1] opacity-[0.03]">
 <div class="absolute inset-0" style="background-image: radial-gradient(#0d631b 0.5px, transparent 0.5px); background-size: 24px 24px;"></div>
 </div>
 <!-- Micro-interaction Script -->
