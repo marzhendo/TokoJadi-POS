@@ -162,6 +162,6 @@
     <a href="{{ route('profile.edit') }}"
        title="Profil & Pengaturan"
        class="p-3 rounded-xl transition-colors duration-150 text-on-surface-variant hover:bg-surface-container-high mt-auto">
-        <span class="material-symbols-outlined">settings</span>
+        <span class="material-symbols-outlined">&#xe8b8;</span>
     </a>
 </nav>
