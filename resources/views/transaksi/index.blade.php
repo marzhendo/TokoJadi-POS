@@ -28,7 +28,7 @@
 </div>
 
 <div class="bg-surface-white border border-table-border rounded-xl shadow-sm overflow-hidden">
-    <div class="overflow-x-auto hidden sm:block">
+    <div class="overflow-x-auto">
         <table class="w-full text-left border-collapse">
             <thead class="bg-surface-container-low border-b border-table-border">
                 <tr>
@@ -76,44 +76,6 @@
                 @endforelse
             </tbody>
         </table>
-    </div>
-
-    <!-- Mobile View -->
-    <div class="sm:hidden flex flex-col divide-y divide-table-border">
-        @forelse ($transaksi as $trx)
-            <div class="p-4 hover:bg-surface-container-lowest transition-colors flex flex-col gap-2">
-                <div class="flex justify-between items-start">
-                    <div>
-                        <span class="font-bold text-text-primary block">{{ $trx->tanggal->format('d M Y') }}</span>
-                        <span class="text-xs text-text-secondary">{{ $trx->tanggal->format('H:i') }}</span>
-                    </div>
-                    <div class="text-right">
-                        <span class="font-numeric-mono text-primary font-bold text-lg block">Rp {{ number_format($trx->total_belanja, 0, ',', '.') }}</span>
-                        @if($trx->metode_bayar === 'cash')
-                            <span class="px-2 py-1 bg-success-margin/10 text-success-margin text-[10px] font-bold rounded border border-success-margin/20 uppercase tracking-wider mt-1 inline-block">CASH</span>
-                        @else
-                            <span class="px-2 py-1 bg-warning-margin/10 text-warning-margin text-[10px] font-bold rounded border border-warning-margin/20 uppercase tracking-wider mt-1 inline-block">KASBON</span>
-                        @endif
-                    </div>
-                </div>
-                <div class="mt-2 pt-2 border-t border-table-border/50">
-                    <span class="text-xs font-bold text-text-secondary uppercase mb-1 block">Detail Item:</span>
-                    <ul class="space-y-1">
-                        @foreach($trx->detail as $dtl)
-                            <li class="text-sm flex justify-between items-center">
-                                <span class="text-text-primary font-medium">{{ $dtl->produkSatuanJual->produk->nama ?? 'Produk Dihapus' }} <span class="text-text-secondary text-xs ml-1">x{{ floatval($dtl->jumlah) }}</span></span>
-                                <span class="text-text-secondary text-xs">Rp {{ number_format($dtl->harga_satuan, 0, ',', '.') }}</span>
-                            </li>
-                        @endforeach
-                    </ul>
-                </div>
-            </div>
-        @empty
-            <div class="p-8 text-center text-text-secondary">
-                <span class="material-symbols-outlined block text-4xl mb-2 opacity-50">receipt_long</span>
-                Belum ada riwayat transaksi.
-            </div>
-        @endforelse
     </div>
     
     <div class="p-4 border-t border-table-border">

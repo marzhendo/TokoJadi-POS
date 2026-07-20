@@ -68,8 +68,7 @@
             {{-- Data Table --}}
             <div class="bg-surface border border-outline-variant rounded-xl overflow-hidden">
                 <div class="overflow-x-auto">
-                    <div class="overflow-x-auto w-full">
-<table class="w-full text-left border-collapse">
+                    <table class="w-full text-left border-collapse">
                         <thead>
                             <tr class="bg-surface-container-lowest border-b border-table-border">
                                 <th class="py-3 px-4 text-xs font-bold text-text-secondary uppercase tracking-wider">Produk</th>
@@ -115,7 +114,6 @@
                             @endforelse
                         </tbody>
                     </table>
-</div>
                 </div>
                 
                 @if($breakdown->hasPages())

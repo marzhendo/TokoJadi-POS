@@ -54,7 +54,7 @@
 
             {{-- Data Table --}}
             <div class="bg-surface border border-outline-variant rounded-xl overflow-hidden">
-                <div class="overflow-x-auto hidden sm:block">
+                <div class="overflow-x-auto">
                     <table class="w-full text-left border-collapse">
                         <thead>
                             <tr class="bg-surface-container-lowest border-b border-table-border">
@@ -95,37 +95,6 @@
                             @endforelse
                         </tbody>
                     </table>
-                </div>
-
-                <!-- Mobile View -->
-                <div class="sm:hidden flex flex-col divide-y divide-table-border">
-                    @forelse($transaksi as $t)
-                        <div class="p-4 hover:bg-surface-container-lowest transition-colors flex flex-col gap-2">
-                            <div class="flex justify-between items-start">
-                                <div>
-                                    <span class="font-bold text-text-primary block">{{ \Carbon\Carbon::parse($t->tanggal)->format('d M Y') }}</span>
-                                    <span class="text-xs text-text-secondary">{{ \Carbon\Carbon::parse($t->tanggal)->format('H:i') }}</span>
-                                </div>
-                                <div class="text-right">
-                                    <span class="font-numeric-mono text-primary font-bold text-lg block">Rp {{ number_format($t->total_belanja, 0, ',', '.') }}</span>
-                                    <span class="inline-flex items-center px-2 py-1 bg-surface-container-high border border-outline-variant rounded text-[10px] font-bold uppercase tracking-wider text-text-secondary mt-1">
-                                        {{ $t->metode_bayar }}
-                                    </span>
-                                </div>
-                            </div>
-                            <div class="mt-2 pt-2 border-t border-table-border/50">
-                                <span class="text-xs font-bold text-text-secondary uppercase mb-1 block">Detail Item:</span>
-                                <div class="text-sm text-text-primary">
-                                    Total <span class="font-bold">{{ $t->detail->sum('jumlah') }} Item</span> terjual dalam transaksi ini.
-                                </div>
-                            </div>
-                        </div>
-                    @empty
-                        <div class="p-8 text-center text-text-secondary">
-                            <span class="material-symbols-outlined text-4xl block mb-2 opacity-50">receipt_long</span>
-                            <p>Tidak ada transaksi pada rentang tanggal ini.</p>
-                        </div>
-                    @endforelse
                 </div>
                 
                 @if($transaksi->hasPages())
